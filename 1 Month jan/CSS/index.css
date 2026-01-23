@@ -1,3 +1,7 @@
 body{
-    background: red;
+    background: rgb(123, 153, 125);
+}
+
+.title-1{
+    color: rgba(255, 255, 255, 0.909);
 }
