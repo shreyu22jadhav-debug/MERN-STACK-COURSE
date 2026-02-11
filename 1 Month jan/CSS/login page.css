@@ -1,0 +1,21 @@
+body{
+    background: #60ed48;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+.main-box{
+    background: white !important;
+}
+input{
+    background: #f2f2f2 !important;
+}
+.login-btn{
+    background: #60ed48;
+}
+.main-box{
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+     rgba(0, 0, 0, 0.22) 0px 15px 12px;   
+}
