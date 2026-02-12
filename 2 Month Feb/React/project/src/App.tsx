@@ -1,33 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>HOC Tech Solution Ltd</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>HOC</h1>
+      <p>React is a JavaScript library for building user interfaces.
+      React is used to build single-page applications.
+      React allows us to create reusable UI components.</p>
+      <p>React is a JavaScript library for building user interfaces.
+      React is used to build single-page applications.
+      React allows us to create reusable UI components</p>
+      <p>React is a JavaScript library for building user interfaces.
+      React is used to build single-page applications.
+      React allows us to create reusable UI components</p>
+      <ul>
+        <li>HOME</li>
+      </ul>
+       <ul>
+        <li>About Us</li>
+      </ul>
+       <ul>
+        <li>Contact Us</li>
+      </ul>
+
     </>
   )
 }
