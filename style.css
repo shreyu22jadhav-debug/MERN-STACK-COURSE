@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+/* universal css */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "GRAD" 0;
+  font-weight: 650rem;
+}
+
+body {
+  background: #ffff;
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400 !important;
+  font-style: normal;
+  font-variation-settings: "GRAD" 0;
+}
+
+.gmail-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gmail-header {
+  display: flex;
+  text-align: center;
+  padding: 8px 12px;
+  height: 62px;
+  background: #F8FAFD;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+
+}
+
+.header-search {
+  max-width: 500px;
+  background: #E9EEF6;
+  border: 0px solid black;
+  border-radius: 50px;
+}
+
+.compose-btn {
+  background: #C2E7FF;
+  border: none !important;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: ba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  color: black !important;
+  text-align: center;
+}
+
+/* side bar */
+.sidebar {
+  padding: 9px;
+  background: #F8FAFD;
+  position: fixed;
+  bottom: 0;
+  top: 7%;
+}
+
+.compose-btn:hover {
+  background: #C2E7FF;
+  box-shadow: ba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+
+ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.sidebar-nav {
+  padding-left: 10px;
+}
+
+.nav-item {
+  padding: 10px 24px 0 20px;
+  height: 32px;
+  border-radius: 0 16px 16px 0;
+  font-size: 16px;
+  color: #202124;
+  margin: 2px 0;
+  text-decoration: none !important;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  }
+
+/* main content */
+
+.nav-header{
+  position: fixed;
+  width: 95%;
+  background-color: white;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  margin-left: 16%;
+  margin-top: 4%;
+  padding-right: 0px;
+ }
+
+.box-1{
+  width: 95%;
+}
+
+.box-2{
+  width: 5%;
+  background: #F8FAFD;
+  padding-top: 40px;
+}
+
+.email-list {
+  background: #fff;
+  padding-left: 0px;
+  padding-top: 40px;
+}
+
+.email-row {
+  height: 45px;
+  cursor: pointer;
+  
+}
+
+.read {
+  background: #F2F6FCFF;
+}
+
+.unread {
+  background: white;
+  font-weight: bold;
+}
+
+.read .form-check-input {
+  background: #F2F6FCFF;
+  border: 1px solid #525252;
+}
+
+.unread .form-check-input {
+  background: white;
+}
+
+.email-row:hover{
+box-shadow: 3px 0px 10px 0px #000000ae;
+}
+
+.header-btn {
+  padding: 0;
+  margin: 2px 0;
+  text-decoration: none !important;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  cursor: pointer;
+}
