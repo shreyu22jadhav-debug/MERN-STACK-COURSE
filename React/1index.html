@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbox (95) - shreyu22jadhav@gmail.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Google Sans', Roboto, sans-serif; background: #f6f8fc; color: #202124; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex; align-items: center; padding: 8px 16px; gap: 16px;
+    background: #f6f8fc; height: 64px; flex-shrink: 0;
+  }
+  .menu-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .menu-btn:hover { background: #e8eaed; }
+  .logo { display: flex; align-items: center; gap: 4px; margin-right: 8px; }
+  .logo img { height: 40px; }
+  .logo-text { font-size: 22px; color: #5f6368; font-weight: 400; letter-spacing: -0.5px; }
+  .logo-g { color: #4285f4; } .logo-m { color: #ea4335; } .logo-a { color: #fbbc05; } .logo-i { color: #4285f4; } .logo-l { color: #34a853; }
+  .search-bar {
+    flex: 1; max-width: 720px; background: #eaf1fb; border-radius: 24px;
+    display: flex; align-items: center; padding: 0 16px; height: 46px; gap: 8px;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .search-bar:hover { background: #e2eaf8; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .search-bar input { background: none; border: none; outline: none; font-size: 16px; color: #202124; width: 100%; font-family: inherit; }
+  .search-icon { color: #5f6368; }
+  .topbar-right { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; display: flex; color: #5f6368; font-size: 20px; }
+  .icon-btn:hover { background: #e8eaed; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #d93025; color: white; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; cursor: pointer; }
+
+  /* MAIN LAYOUT */
+  .main { display: flex; flex: 1; overflow: hidden; }
+
+  /* SIDEBAR */
+  .sidebar { width: 256px; flex-shrink: 0; overflow-y: auto; padding: 8px 0; }
+  .compose-btn {
+    display: flex; align-items: center; gap: 12px; margin: 0 8px 16px;
+    background: #c2e7ff; border: none; border-radius: 16px; padding: 16px 24px;
+    cursor: pointer; font-size: 14px; font-weight: 500; color: #001d35;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: box-shadow 0.2s;
+  }
+  .compose-btn:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+  .compose-btn svg { flex-shrink: 0; }
+  .nav-item {
+    display: flex; align-items: center; padding: 0 16px; height: 32px; border-radius: 0 16px 16px 0;
+    cursor: pointer; font-size: 14px; color: #202124; gap: 16px; margin-right: 16px;
+    transition: background 0.1s; position: relative; user-select: none;
+  }
+  .nav-item:hover { background: #e8eaed; }
+  .nav-item.active { background: #d3e3fd; font-weight: 600; }
+  .nav-item svg, .nav-item .nav-icon { color: #444746; flex-shrink: 0; }
+  .nav-item.active svg { color: #001d35; }
+  .nav-label { flex: 1; }
+  .badge { background: transparent; color: #202124; font-size: 12px; font-weight: 400; }
+  .nav-divider { height: 1px; background: #e2e8f0; margin: 8px 0; }
+
+  /* EMAIL LIST */
+  .email-section { flex: 1; overflow: hidden; display: flex; flex-direction: column; background: #f6f8fc; }
+
+  .toolbar {
+    display: flex; align-items: center; padding: 4px 16px; height: 48px; gap: 8px; flex-shrink: 0;
+  }
+  .checkbox-area { display: flex; align-items: center; gap: 4px; }
+  .chk { width: 16px; height: 16px; border: 2px solid #444746; border-radius: 3px; cursor: pointer; }
+  .dropdown-arrow { color: #5f6368; cursor: pointer; font-size: 12px; }
+  .toolbar-right { margin-left: auto; font-size: 12px; color: #444746; display: flex; align-items: center; gap: 8px; }
+  .nav-arrow { background: none; border: none; cursor: pointer; color: #444746; font-size: 18px; padding: 4px 8px; border-radius: 50%; }
+  .nav-arrow:hover { background: #e8eaed; }
+
+  /* TABS */
+  .tabs { display: flex; border-bottom: 1px solid #e2e8f0; background: white; flex-shrink: 0; }
+  .tab {
+    display: flex; align-items: center; gap: 8px; padding: 0 20px; height: 48px;
+    cursor: pointer; font-size: 13px; color: #444746; border-bottom: 3px solid transparent;
+    transition: color 0.2s; user-select: none; flex: 1;
+  }
+  .tab:hover { background: #f1f3f4; color: #202124; }
+  .tab.active { color: #1a73e8; border-bottom-color: #1a73e8; font-weight: 500; }
+  .tab-label { white-space: nowrap; }
+  .tab-badge { background: #1a73e8; color: white; font-size: 11px; border-radius: 8px; padding: 1px 6px; }
+
+  /* EMAIL LIST */
+  .email-list { flex: 1; overflow-y: auto; background: white; margin: 0 16px; border-radius: 16px; }
+  .email-row {
+    display: flex; align-items: center; padding: 0 16px; height: 52px; gap: 12px;
+    border-bottom: 1px solid #f1f3f4; cursor: pointer; transition: background 0.1s;
+  }
+  .email-row:hover { background: #f2f6fc; box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 1; position: relative; }
+  .email-row.unread { font-weight: 600; background: white; }
+  .email-row.read { background: white; color: #5f6368; }
+  .email-chk { width: 16px; height: 16px; border: 2px solid #c4c7c5; border-radius: 3px; flex-shrink: 0; cursor: pointer; }
+  .star-btn { background: none; border: none; cursor: pointer; color: #c4c7c5; font-size: 16px; flex-shrink: 0; }
+  .star-btn.starred { color: #f6c026; }
+  .sender { width: 160px; flex-shrink: 0; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .new-badge { background: #0b57d0; color: white; font-size: 10px; border-radius: 4px; padding: 1px 5px; margin-left: 4px; font-weight: 500; }
+  .subject-preview { flex: 1; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; gap: 6px; }
+  .subject { color: #202124; }
+  .preview { color: #5f6368; font-weight: 400; }
+  .email-row.read .subject { color: #444746; }
+  .separator { color: #c4c7c5; }
+  .email-time { font-size: 12px; color: #444746; flex-shrink: 0; white-space: nowrap; }
+  .email-row.unread .email-time { font-weight: 600; color: #202124; }
+
+  /* NOTIFICATION */
+  .notification-bar {
+    position: fixed; bottom: 16px; left: 16px; background: #323232; color: white;
+    padding: 12px 16px; border-radius: 4px; display: flex; align-items: center; gap: 16px;
+    font-size: 14px; z-index: 999;
+  }
+  .notif-btn { background: none; border: none; color: #8ab4f8; cursor: pointer; font-size: 13px; font-weight: 500; }
+  .notif-close { background: none; border: none; color: white; cursor: pointer; font-size: 18px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #c4c7c5; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="menu-btn">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368"><rect y="4" width="24" height="2" rx="1"/><rect y="11" width="24" height="2" rx="1"/><rect y="18" width="24" height="2" rx="1"/></svg>
+  </button>
+  <div class="logo">
+    <svg height="40" viewBox="0 0 75 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- M icon -->
+      <path d="M4 6h16v12H4z" fill="white" stroke="#e0e0e0" stroke-width="0.5"/>
+      <path d="M4 6l8 7 8-7" fill="none" stroke="#EA4335" stroke-width="1.5"/>
+      <path d="M4 6v12" fill="none" stroke="#34A853" stroke-width="1.5"/>
+      <path d="M20 6v12" fill="none" stroke="#FBBC04" stroke-width="1.5"/>
+      <path d="M4 18l6-5" fill="none" stroke="#4285F4" stroke-width="1.5"/>
+      <path d="M20 18l-6-5" fill="none" stroke="#C5221F" stroke-width="1.5"/>
+    </svg>
+    <span class="logo-text"><span class="logo-g">G</span><span class="logo-m">m</span><span class="logo-a">a</span><span class="logo-i">i</span><span class="logo-l">l</span></span>
+  </div>
+  <div class="search-bar">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    <input type="text" placeholder="Search mail">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+    </button>
+    <button class="icon-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </button>
+    <div class="avatar">S</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <button class="compose-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#001d35"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      Compose
+    </button>
+
+    <div class="nav-item active">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/></svg>
+      <span class="nav-label">Inbox</span>
+      <span class="badge">95</span>
+    </div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14z"/><path d="M6 13h5v4H6zm7 0h3v2h-3zm0-4h3v2h-3zM6 7h12v4H6z"/></svg>
+      <span class="nav-label">Starred</span>
+    </div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2v6l2 2-2 2v6h12v-6l-2-2 2-2V2H6zm10 9.5 2 2V20H6v-6.5l2-2-2-2V4h12v4.5l-2 2z"/></svg>
+      <span class="nav-label">Snoozed</span>
+    </div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      <span class="nav-label">Sent</span>
+    </div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H4.99c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 8H8V9h8v2z"/></svg>
+      <span class="nav-label">Drafts</span>
+    </div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4v2l8 5 8-5V4zm0 4l-8 5-8-5v10h16V8z"/></svg>
+      <span class="nav-label">Purchases</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      <span class="nav-label">More</span>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-item" style="font-size:13px; color:#444746; font-weight:500;">
+      <span class="nav-label">Labels</span>
+      <span style="font-size:20px; color:#5f6368; cursor:pointer">+</span>
+    </div>
+  </div>
+
+  <!-- EMAIL SECTION -->
+  <div class="email-section">
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="checkbox-area">
+        <div class="chk"></div>
+        <span class="dropdown-arrow">▾</span>
+      </div>
+      <button class="icon-btn" title="Refresh">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      </button>
+      <button class="icon-btn" title="More">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      </button>
+      <div class="toolbar-right">
+        <span>1–50 of 149</span>
+        <button class="nav-arrow">‹</button>
+        <button class="nav-arrow">›</button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/></svg>
+        <span class="tab-label">Primary</span>
+      </div>
+      <div class="tab">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm1 17.93V18c0-.55-.45-1-1-1s-1 .45-1 1v1.93C7.06 19.48 4.52 16.94 4.07 13H6c.55 0 1-.45 1-1s-.45-1-1-1H4.07C4.52 7.06 7.06 4.52 11 4.07V6c0 .55.45 1 1 1s1-.45 1-1V4.07C16.94 4.52 19.48 7.06 19.93 11H18c-.55 0-1 .45-1 1s.45 1 1 1h1.93c-.45 3.94-2.99 6.48-6.93 6.93z"/></svg>
+        <span class="tab-label">Promotions</span>
+        <span class="tab-badge">1 new</span>
+      </div>
+      <div class="tab">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <span class="tab-label">Social</span>
+      </div>
+      <div class="tab">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        <span class="tab-label">Updates</span>
+      </div>
+    </div>
+
+    <!-- EMAIL LIST -->
+    <div class="email-list">
+      <!-- Emails -->
+      <div class="email-row unread">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">HOC Tech Solutions .</div>
+        <div class="subject-preview">
+          <span class="subject">'HOC Bill Web App' space – Invitation to join</span>
+          <span class="separator">-</span>
+          <span class="preview">HOC Tech Solutions &lt;hoctechsolutions@...</span>
+        </div>
+        <div class="email-time">20:06</div>
+      </div>
+
+      <div class="email-row unread">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Google Busines... <span class="new-badge">New</span></div>
+        <div class="subject-preview">
+          <span class="subject">Harshvardhan left a review for JADHAV DHABA</span>
+          <span class="separator">-</span>
+          <span class="preview">Go to reviews and respond to cust...</span>
+        </div>
+        <div class="email-time">20 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">HR HOC Tech Solutio.</div>
+        <div class="subject-preview">
+          <span class="subject">Folder shared with you: 'Batch 4 : MERN Stack'</span>
+          <span class="separator">-</span>
+          <span class="preview">HR HOC Tech Solutions shared a folde...</span>
+        </div>
+        <div class="email-time">18 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Akshada Patil (via .</div>
+        <div class="subject-preview">
+          <span class="subject">Akshada Patil &lt;akshadap46@gmail.com&gt; messaged you on Google Chat while you were...</span>
+        </div>
+        <div class="email-time">18 Feb</div>
+      </div>
+
+      <div class="email-row unread">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Akshada Patil (via .</div>
+        <div class="subject-preview">
+          <span class="subject">Akshada Patil &lt;akshadap46@gmail.com&gt; messaged you on Google Chat while yo...</span>
+        </div>
+        <div class="email-time">15 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">GitHub</div>
+        <div class="subject-preview">
+          <span class="subject">GitHub Copilot: What's in your free plan 🤖</span>
+          <span class="separator">-</span>
+          <span class="preview">You now have access to GitHub Copilot. Th...</span>
+        </div>
+        <div class="email-time">14 Feb</div>
+      </div>
+
+      <div class="email-row unread">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Google Business Pro.</div>
+        <div class="subject-preview">
+          <span class="subject">Gulnar left a review for JADHAV DHABA</span>
+          <span class="separator">-</span>
+          <span class="preview">Go to reviews and respond to customers to...</span>
+        </div>
+        <div class="email-time">9 Feb</div>
+      </div>
+
+      <div class="email-row unread">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Google Business Pro.</div>
+        <div class="subject-preview">
+          <span class="subject">JADHAV DHABA, your performance report for January 2026</span>
+          <span class="separator">-</span>
+          <span class="preview">76 people viewed JA...</span>
+        </div>
+        <div class="email-time">7 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">HOC Tech Solutions .</div>
+        <div class="subject-preview">
+          <span class="subject">HOC Tech Solutions &lt;hoctechsolutions@gmail.com&gt; messaged you on Google Ch...</span>
+        </div>
+        <div class="email-time">6 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">HOC Tech Solutions .</div>
+        <div class="subject-preview">
+          <span class="subject">HOC Tech Solutions &lt;hoctechsolutions@gmail.com&gt; messaged you on Google Ch...</span>
+        </div>
+        <div class="email-time">4 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Noreply LinkedIn</div>
+        <div class="subject-preview">
+          <span class="subject">Your weekly job recommendations</span>
+          <span class="separator">-</span>
+          <span class="preview">Based on your profile and recent activity...</span>
+        </div>
+        <div class="email-time">3 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Google Play</div>
+        <div class="subject-preview">
+          <span class="subject">Your January 2026 Google Play summary</span>
+          <span class="separator">-</span>
+          <span class="preview">Here's what you did on Google Play last month...</span>
+        </div>
+        <div class="email-time">1 Feb</div>
+      </div>
+
+      <div class="email-row read">
+        <div class="email-chk"></div>
+        <button class="star-btn">☆</button>
+        <div class="sender">Paytm</div>
+        <div class="subject-preview">
+          <span class="subject">You received ₹500 – Transaction successful</span>
+          <span class="separator">-</span>
+          <span class="preview">Paytm confirms your payment details...</span>
+        </div>
+        <div class="email-time">28 Jan</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION BAR -->
+<div class="notification-bar" id="notifBar">
+  Enable desktop notifications for Gmail.
+  <button class="notif-btn">OK</button>
+  <button class="notif-btn">No, thanks</button>
+  <button class="notif-close" onclick="document.getElementById('notifBar').style.display='none'">✕</button>
+</div>
+
+<script>
+  // Star toggle
+  document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.classList.toggle('starred');
+      btn.textContent = btn.classList.contains('starred') ? '★' : '☆';
+    });
+  });
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Email row click - mark as read
+  document.querySelectorAll('.email-row').forEach(row => {
+    row.addEventListener('click', () => {
+      row.classList.remove('unread');
+      row.classList.add('read');
+    });
+  });
+
+  // Checkbox hover
+  document.querySelectorAll('.email-chk').forEach(chk => {
+    let checked = false;
+    chk.addEventListener('click', e => {
+      e.stopPropagation();
+      checked = !checked;
+      chk.style.background = checked ? '#0b57d0' : '';
+      chk.style.borderColor = checked ? '#0b57d0' : '';
+    });
+  });
+</script>
+</body>
+</html>
