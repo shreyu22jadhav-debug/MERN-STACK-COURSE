@@ -42,7 +42,7 @@ const itemsschema = new mongoose.Schema({
   sellingprice: Number,
   purchaseprice: Number,
   quantity: Number,
-  unit: String
+  unit: String,
 });
 
 const item = new mongoose.model("item", itemsschema) // table name /collection name-item == structure
