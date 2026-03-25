@@ -1,113 +1,223 @@
-// backed project
+// Backed Project // Node js  // Express Js // DB - MongoDb  
 
-//node.js
-// express.js
-//DB mongoDb
+// Print message in terminal when server file starts running
+console.log("Hello Node js Project Strted")  
 
-//APT List
+// Import Express framework (used to create server and APIs)
+const express = require('express') 
 
-// 1. APT create ltem-  get data values from front and ( Items details) and store into DB
-//2. APT update Item - get Item detais from front and which Item we need to update 
-//3 .APT Delete Itme - get itme details from front and an delete this record from database 
-//4 .APT AL Recorde - get all records from front  DB and Show to UI front end 
+// Create express application instance
+const app = express() 
 
+// Import mongoose library (used to connect Node.js with MongoDB database)
+const mongoose = require('mongoose') 
 
+// Import CORS library (allows frontend apps to call backend APIs)
+const cors = require('cors') 
 
-//const getdata =() =>{
-//}
-//function  getadata(){  
-//}
-console.log("Hello node js project strted")
+// Middleware: convert incoming request data into JSON format
+app.use(express.json()) 
 
-const express = require("express") //node.js fremwork
-const app = express() //app- variable - strore express function 
-const mongoose = require("mongoose") // library -connect mongodb database 
-const { error } = require("node:console")
-const cors= require("cors")// library- solve cors error
-
-app.use(express.json()) //convert all data into json formt
-app.use(cors())
-//  DB connection
+// Middleware: enable Cross-Origin Resource Sharing
+app.use(cors()) 
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/item-database").then(() => console.log("mongodb connected")).catch((error) => console.log(error))
+// ----------------------
+// MongoDB Database Connection
+// ----------------------
+
+// Connect Node.js server with MongoDB database
+mongoose.connect("mongodb://127.0.0.1:27017/item-database")
+
+// If connection successful show message in console
+.then(() => console.log("Mongo DB Connected"))
+
+// If error occurs print error
+.catch((error) => console.log(error)) 
 
 
-//Schema- model-data base table structure
-// values store database- structure
 
-const itemsschema = new mongoose.Schema({
-  name: String,
-  description: String,
-  sellingprice: Number,
-  purchaseprice: Number,
-  quantity: Number,
-  unit: String,
-});
+// ----------------------
+// Schema - Model (Database Structure)
+// ----------------------
 
-const item = new mongoose.model("item", itemsschema) // table name /collection name-item == structure
+// Define structure of item document in MongoDB
+const itemsSchema = new mongoose.Schema({
 
-// API 1-create item
+    // Item name
+    name: String,
+
+    // Item description
+    decription: String,
+
+    // Selling price of item
+    sellingPrice: Number,
+
+    // Purchase price of item
+    purchasePrice: Number,
+
+    // Available quantity
+    quantity: Number,
+
+    // Unit type (kg, pcs, box etc)
+    unit: String
+})
+
+
+// Create collection/table called "Items"
+const Items = new mongoose.model("Items", itemsSchema)
+
+
+
+// ----------------------
+// API 1 - Create Item
+// ----------------------
+
+// POST API to create new item
 app.post("/api/create-item", async (req, res) => {
-  try {
-    const { name, description, sellingprice ,purchaseprice, quantity, unit } = req.body
-    const saveItem = new item({
-      name,
-      description,
-      sellingprice,
-      purchaseprice,
-      quantity,
-      unit
+
+    try {
+
+        // Get item data sent from frontend
+        const { name, decription, sellingPrice, purchasePrice, quantity, unit } = req.body
+
+        // Create new item object using model
+        const saveItem = new Items({
+            name,
+            decription,
+            sellingPrice,
+            purchasePrice,
+            quantity,
+            unit
+        })
+
+        // Save item into MongoDB
+        await saveItem.save()
+
+        // Send response to frontend
+        res.status(201).json({
+            message: "Item Created",
+            data: saveItem
+        })
+
+    } catch (error) {
+
+        // Print error in console
+        console.log(error)
+
     }
 
-    )
-    await saveItem.save()
-    res.status(201).json({ message: "Item created", data: saveItem })
-
-  } catch (error) {
-    console.log(error)
-  }
 })
 
 
-// API 2-update/edit item
-app.put("api/update-item", (req, res) => {
-  try {
 
-  } catch (error) {
-    console.log
-  }
+// ----------------------
+// API 2 - Update/Edit Item
+// ----------------------
+
+// PUT API used to update existing item
+app.put("/api/update-item", (req, res) => {
+
+    try {
+
+        // Here we will receive item ID and updated data from frontend
+        // Then we will update record in database using mongoose update query
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+
 })
 
-// API 3-delete item 
-app.delete("api/delete-item", (req, res) => {
-  try {
 
-  } catch (error) {
-    console.log
-  }
+
+// ----------------------
+// API 3 - Delete Item
+// ----------------------
+
+// DELETE API to remove item from database
+app.delete("/api/delete-item/:id", async (req, res) => {
+
+    try {
+
+        // Get item ID from URL parameters
+        const { id } = req.params
+
+        // Find item by ID and delete it
+        const deleteItem = await Items.findByIdAndDelete(id)
+
+        // Send success response
+        res.status(200).json({
+            message: "Item Deleted",
+            deleteItem: deleteItem
+        })
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+
 })
-// API 4-GetAll item
+
+
+
+// ----------------------
+// API 4 - Get All Items
+// ----------------------
+
+// GET API to fetch all items from database
 app.get("/api/get-all-item", async (req, res) => {
-  try {
-    const items = await item.find()
-    res.status(200).json({ message: "  Get AllItem list", data: items })
-  } catch (error) {
-    console.log
-  }
+
+    try {
+
+        // Fetch all documents from Items collection
+        const items = await Items.find()
+
+        // Send data to frontend
+        res.status(200).json({
+            message: "Get All Item List",
+            data: items
+        })
+
+    } catch (error) {
+
+        console.log(error)
+
+    }
+
 })
 
-// Helth API
-app.use("/helth", (req, res) => {
-  res.status(200).json({ message: "server is runing" })
+
+
+// ----------------------
+// Health Check API
+// ----------------------
+
+// Simple API to check server is running or not
+app.get("/helth", (req, res) => {
+
+    res.status(200).json({
+        message: "Server is Runing"
+    })
+
 })
 
 
 
-//srever start
+// ----------------------
+// Server Start
+// ----------------------
+
+// Define port number where server will run
 const PORT = 9090
 
-
+// Start express server
 app.listen(PORT, () => {
-  console.log('server stared')
+
+    // Show message when server starts
+    console.log('Server Started')
+
 })
