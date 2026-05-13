@@ -49,5 +49,3 @@ const mypromise = async () => {
     //APT integration
     //DB call -add delete update  get from DB -await
 }
-
- 
